@@ -1,0 +1,41 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+
+button {
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: #C0C0C0; }
+
+.container {
+  width: 100%;
+  height: 100%; }
+  .container .course-selection {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 45%; }
+    .container .course-selection .course {
+      width: 180px;
+      height: 200px;
+      border: 1px solid #000000;
+      text-align: center;
+      border-radius: 5px;
+      background-color: #ffffff;
+      box-shadow: 10px 10px 31px -13px rgba(0, 0, 0, 0.75);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; }
+      .container .course-selection .course .name {
+        margin: 5px 0; }
+  .container .score-card {
+    height: 55%;
+    width: 100%; }
+    .container .score-card .holes, .container .score-card .yardage, .container .score-card .scores {
+      display: flex; }
+    .container .score-card .holes .col {
+      width: 70px; }
