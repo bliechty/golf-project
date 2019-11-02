@@ -32,10 +32,25 @@ button {
       justify-content: space-between; }
       .container .course-selection .course .name {
         margin: 5px 0; }
-  .container .score-card {
-    height: 55%;
-    width: 100%; }
-    .container .score-card .holes, .container .score-card .yardage, .container .score-card .scores {
-      display: flex; }
-    .container .score-card .holes .col {
-      width: 70px; }
+  .container .score-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; }
+    .container .score-card-container .score-card {
+      border: 1px solid #000000;
+      display: inline-block;
+      width: auto;
+      margin: 0 auto; }
+      .container .score-card-container .score-card .holes, .container .score-card-container .score-card .yardage, .container .score-card-container .score-card .handicap {
+        display: flex;
+        text-align: center; }
+      .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .holes .boxes {
+        height: 30px;
+        border: 1px solid #000000;
+        line-height: 30px; }
+      .container .score-card-container .score-card .holes .firstColumn {
+        width: 200px; }
+      .container .score-card-container .score-card .holes .col, .container .score-card-container .score-card .holes .boxes {
+        width: 45px; }
+      .container .score-card-container .score-card .holes .scores, .container .score-card-container .score-card .holes .score-boxes {
+        width: 80px; }

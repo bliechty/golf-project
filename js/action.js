@@ -21,7 +21,7 @@ $(function() {
                                 <option value='4'>4 Players</option>
                             </select>
                             <button onclick='displayHoles(${myCourse.data.holes.length});
-                                displayScoreInputs(${myCourse.data.holes.length}, $("#selectid${i}").val())'>Select</button>
+                                displayScoreCardInfo(${myCourse.data.holes.length}, $("#selectid${i}").val())'>Select</button>
                         </div>
                     </div>`);
             });
@@ -31,13 +31,50 @@ $(function() {
 
 function displayHoles (numberOfHoles) {
     $('.holes').html('');
-    for (let i = 1; i <= numberOfHoles; i++) {
-        $('.holes').append(`<div id='col${i}' class='col'>Hole ${i}</div>`);
+    $('.holes').append(`<div id='first-column'>
+            <div class='firstColumn'>Hole</div>
+        </div>`);
+    for (let i = 1; i <= numberOfHoles / 2; i++) {
+        $('.holes').append(`<div id='col${i}' class='col'>
+                <div class='boxes'>${i}</div>
+            </div>`);
     }
+
+    $('.holes').append(`<div id='out-score' class='scores'>
+            <div class='score-boxes'>Out Score</div>
+        </div>`);
+
+    for (let i = numberOfHoles / 2 + 1; i <= numberOfHoles; i++) {
+        $('.holes').append(`<div id='col${i}' class='col'>
+            <div class='boxes'>${i}</div>
+        </div>`);
+    }
+
+    $('.holes').append(`<div id='in-score' class='scores'>
+            <div class='score-boxes'>In Score</div>
+        </div>`);
+    $('.holes').append(`<div id='total-score' class='scores'>
+            <div class='score-boxes'>Total Score</div>
+        </div>`);
 }
 
-function displayScoreInputs (numberOfHoles, numberOfPlayers) {
-    console.log(numberOfHoles, numberOfPlayers);
+function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
+    for (let i = 1; i <= numberOfPlayers; i++) {
+        $('#first-column').append(`<div class='firstColumn'>Enter Name Here...</div>`);
+
+        for (let j = 1; j <= numberOfHoles / 2; j++) {
+            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes'></div>`);
+        }
+
+        $('#out-score').append(`<div id='outscore${i}' class='score-boxes'></div>`);
+
+        for (let j = numberOfHoles / 2 + 1; j <= numberOfHoles; j++) {
+            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes'></div>`);
+        }
+
+        $('#in-score').append(`<div id='inscore${i}' class='score-boxes'></div>`);
+        $('#total-score').append(`<div id='totalscore${i}' class='score-boxes'></div>`);
+    }
 }
 
 function getCourses() {
