@@ -36,11 +36,12 @@ button {
     width: 100%;
     display: flex;
     justify-content: center; }
+    .container .score-card-container .tee-selection {
+      display: none; }
     .container .score-card-container .score-card {
       border: 1px solid #000000;
-      display: inline-block;
-      width: auto;
-      margin: 0 auto; }
+      display: none;
+      width: auto; }
       .container .score-card-container .score-card .holes, .container .score-card-container .score-card .yardage, .container .score-card-container .score-card .handicap {
         display: flex;
         text-align: center; }
