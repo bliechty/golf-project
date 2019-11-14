@@ -78,14 +78,14 @@ function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
 
         for (let j = 1; j <= numberOfHoles / 2; j++) {
             $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onblur='loseFocusScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
+                onkeyup='enterScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
         }
 
         $('#out-score').append(`<div id='outscore${i}' class='score-boxes'></div>`);
 
         for (let j = numberOfHoles / 2 + 1; j <= numberOfHoles; j++) {
             $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onblur='loseFocusScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
+                onkeyup='enterScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
         }
 
         $('#in-score').append(`<div id='inscore${i}' class='score-boxes'></div>`);
@@ -226,60 +226,4 @@ function getCourse(id) {
         xhttp.open('GET', `https://golf-courses-api.herokuapp.com/courses/${id}`);
         xhttp.send();
     });
-}
-
-function editPlayerName(el) {
-    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element/6150060#6150060
-    let range = document.createRange();
-    range.selectNodeContents(el);
-    let sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    $(el).attr('contenteditable', 'true');
-    $('div[contenteditable="true"]').trigger('focus');
-    $(el).css('cursor', 'auto');
-}
-
-function enterPlayerName(e, el, index) {
-    if (e.which === 13) {
-        players.collection[index].name = $(el).text();
-        $(el).attr('contenteditable', 'false');
-        $(el).css('cursor', 'pointer');
-        $(el).blur();
-    }
-}
-
-function loseFocusPlayerName(el, index) {
-    players.collection[index].name = $(el).text();
-    $(el).attr('contenteditable', 'false');
-    $(el).css('cursor', 'pointer');
-}
-
-function editScore(el) {
-    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element/6150060#6150060
-    let range = document.createRange();
-    range.selectNodeContents(el);
-    let sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    $(el).attr('contenteditable', 'true');
-    $('div[contenteditable="true"]').trigger('focus');
-    $(el).css('cursor', 'auto');
-}
-
-function enterScore(e, el, playerNum, holeNum, numberOfHoles) {
-    if (e.which === 13) {
-        players.collection[playerNum].updateScores(playerNum, holeNum, $(el).text(), numberOfHoles);
-        $(el).attr('contenteditable', 'false');
-        $(el).css('cursor', 'pointer');
-        $(el).blur();
-    }
-}
-
-function loseFocusScore(el, playerNum, holeNum, numberOfHoles) {
-    players.collection[playerNum].updateScores(playerNum, holeNum, $(el).text(), numberOfHoles);
-    $(el).attr('contenteditable', 'false');
-    $(el).css('cursor', 'pointer');
 }
