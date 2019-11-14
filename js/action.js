@@ -264,7 +264,7 @@ function editScore(el) {
 
 function enterScore(e, el, playerNum, holeNum, numberOfHoles) {
     if (e.which === 13) {
-        players.collection[playerNum].updateScores(holeNum, $(el).text(), numberOfHoles);
+        players.collection[playerNum].updateScores(playerNum, holeNum, $(el).text(), numberOfHoles);
         $(el).attr('contenteditable', 'false');
         $(el).css('cursor', 'pointer');
         $(el).blur();
@@ -272,7 +272,7 @@ function enterScore(e, el, playerNum, holeNum, numberOfHoles) {
 }
 
 function loseFocusScore(el, playerNum, holeNum, numberOfHoles) {
-    players.collection[playerNum].updateScores(holeNum, $(el).text(), numberOfHoles);
+    players.collection[playerNum].updateScores(playerNum, holeNum, $(el).text(), numberOfHoles);
     $(el).attr('contenteditable', 'false');
     $(el).css('cursor', 'pointer');
 }
