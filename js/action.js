@@ -1,11 +1,11 @@
 const coursesPromise = getCourses();
+let players;
 
 $(function() {
     coursesPromise.then(function(allCourses) {
         let myCourses = allCourses.courses;
         for (let i = 0; i < myCourses.length; i++) {
             getCourse(allCourses.courses[i].id).then(function (myCourse) {
-                console.log(myCourse.data);
                 $('.course-selection').append(
                     `<div class='course'>
                         <div class='course-top'>
@@ -67,17 +67,23 @@ function displayHoles (numberOfHoles) {
 }
 
 function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
+    players = new PlayerCollection();
     for (let i = 1; i <= numberOfPlayers; i++) {
-        $('#first-column').append(`<div class='firstColumn'>Player ${i} (Click to edit)</div>`);
+        players.add(`player${i}`);
+    }
+
+    for (let i = 1; i <= numberOfPlayers; i++) {
+        $('#first-column').append(`<div class='firstColumn playerName' onclick='editTaskName(this)'
+            onkeydown='enterTaskName(event, this, ${i - 1})' onblur='loseFocusTaskName(this, ${i - 1})'>Player ${i} (Click to edit)</div>`);
 
         for (let j = 1; j <= numberOfHoles / 2; j++) {
-            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes'></div>`);
+            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore'></div>`);
         }
 
         $('#out-score').append(`<div id='outscore${i}' class='score-boxes'></div>`);
 
         for (let j = numberOfHoles / 2 + 1; j <= numberOfHoles; j++) {
-            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes'></div>`);
+            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore'></div>`);
         }
 
         $('#in-score').append(`<div id='inscore${i}' class='score-boxes'></div>`);
@@ -218,4 +224,32 @@ function getCourse(id) {
         xhttp.open('GET', `https://golf-courses-api.herokuapp.com/courses/${id}`);
         xhttp.send();
     });
+}
+
+function editTaskName(el) {
+    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element/6150060#6150060
+    let range = document.createRange();
+    range.selectNodeContents(el);
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    $(el).attr('contenteditable', 'true');
+    $('div[contenteditable="true"]').trigger('focus');
+    $(el).css('cursor', 'auto');
+}
+
+function enterTaskName(e, el, index) {
+    if (e.which === 13) {
+        players.collection[index].name = $(el).text();
+        $(el).attr('contenteditable', 'false');
+        $(el).css('cursor', 'pointer');
+        $(el).blur();
+    }
+}
+
+function loseFocusTaskName(el, index) {
+    players.collection[index].name = $(el).text();
+    $(el).attr('contenteditable', 'false');
+    $(el).css('cursor', 'pointer');
 }

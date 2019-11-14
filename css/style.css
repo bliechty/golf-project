@@ -57,3 +57,5 @@ button {
         width: 45px; }
       .container .score-card-container .score-card .holes .scores, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .yardage .scores, .container .score-card-container .score-card .yardage .score-boxes {
         width: 80px; }
+      .container .score-card-container .score-card .holes .playerName, .container .score-card-container .score-card .holes .playerScore, .container .score-card-container .score-card .yardage .playerName, .container .score-card-container .score-card .yardage .playerScore {
+        cursor: pointer; }
