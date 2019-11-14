@@ -5,6 +5,7 @@ $(function() {
         let myCourses = allCourses.courses;
         for (let i = 0; i < myCourses.length; i++) {
             getCourse(allCourses.courses[i].id).then(function (myCourse) {
+                console.log(myCourse.data);
                 $('.course-selection').append(
                     `<div class='course'>
                         <div class='course-top'>
@@ -23,7 +24,8 @@ $(function() {
                             <button onclick='displayHoles(${myCourse.data.holeCount});
                                 displayScoreCardInfo(${myCourse.data.holeCount}, $("#selectid${i}").val());
                                 displayPar(${JSON.stringify((myCourse.data.holes))}, ${myCourse.data.holeCount});
-                                populateTeeSelect(${JSON.stringify(myCourse.data.holes[0].teeBoxes)})'>Select</button>
+                                populateTeeSelect(${JSON.stringify(myCourse)}, ${JSON.stringify(myCourse.data.holes[0].teeBoxes)}, ${i});
+                                displayYardage(${JSON.stringify(myCourse.data.holes)}, ${myCourse.data.holeCount}, ${i})'>Select</button>
                         </div>
                     </div>`);
             });
@@ -107,11 +109,84 @@ function displayPar(holesArray, numberOfHoles) {
     $('#total-score').append(`<div class='score-boxes'>${totalPar}</div>`);
 }
 
-function populateTeeSelect(currentCourse) {
-    $('#tee-select').html(`<option value='-1'>Pick A Tee</option>`);
+function displayHandicap() {
+    let totalHandicap = 0;
+    let outHandicap, inHandicap;
+    $('#first-column').append(`<div class='firstColumn'>Par</div>`);
+
+    for (let i = 1; i <= numberOfHoles / 2; i++) {
+        totalHandicap += holesArray[i - 1].teeBoxes[0].hcp;
+        $(`#col${i}`).append(`<div class='boxes'>${holesArray[i - 1].teeBoxes[0].hcp}</div>`);
+    }
+
+    outHandicap = totalHandicap;
+
+    $('#out-score').append(`<div class='score-boxes'>${outHandicap}</div>`);
+
+    for (let i = numberOfHoles / 2 + 1; i <= numberOfHoles; i++) {
+        totalHandicap += holesArray[i - 1].teeBoxes[0].hcp;
+        $(`#col${i}`).append(`<div class='boxes'>${holesArray[i - 1].teeBoxes[0].hcp}</div>`);
+    }
+
+    inHandicap = totalHandicap - outHandicap;
+
+    $('#in-score').append(`<div class='score-boxes'>${inHandicap}</div>`);
+    $('#total-score').append(`<div class='score-boxes'>${totalHandicap}</div>`);
+}
+
+function displayYardage(holesArray, numberOfHoles, index) {
+    let tee = $(`#tee-select${index}`).val();
+    $('.yardage').html('');
+    if (Number(tee) === -1) {
+        $('.yardage').append(`<div class='firstColumn'>Select A Tee...</div>`);
+
+        for (let i = 1; i <= numberOfHoles / 2; i++) {
+            $(`.yardage`).append(`<div class='boxes'></div>`);
+        }
+
+        $('.yardage').append(`<div class='score-boxes'></div>`);
+
+        for (let i = numberOfHoles / 2 + 1; i <= numberOfHoles; i++) {
+            $(`.yardage`).append(`<div class='boxes'></div>`);
+        }
+
+        $('.yardage').append(`<div class='score-boxes'></div>`);
+        $('.yardage').append(`<div class='score-boxes'></div>`);
+    } else {
+        let totalYards = 0;
+        let outYards, inYards;
+        $('.yardage').append(`<div class='firstColumn'>Yardage</div>`);
+
+        for (let i = 1; i <= numberOfHoles / 2; i++) {
+            totalYards += holesArray[i - 1].teeBoxes[tee].yards;
+            $(`.yardage`).append(`<div class='boxes'>${JSON.stringify(holesArray[i - 1].teeBoxes[tee].yards)}</div>`);
+        }
+
+        outYards = totalYards;
+
+        $('.yardage').append(`<div class='score-boxes'>${outYards}</div>`);
+
+        for (let i = numberOfHoles / 2 + 1; i <= numberOfHoles; i++) {
+            totalYards += holesArray[i - 1].teeBoxes[tee].yards;
+            $(`.yardage`).append(`<div class='boxes'>${JSON.stringify(holesArray[i - 1].teeBoxes[tee].yards)}</div>`);
+        }
+
+        inYards = totalYards - outYards;
+
+        $('.yardage').append(`<div class='score-boxes'>${inYards}</div>`);
+        $('.yardage').append(`<div class='score-boxes'>${totalYards}</div>`);
+    }
+}
+
+function populateTeeSelect(myCourse, currentCourse, index) {
+    $('.tee-selection').html(
+        `<select id='tee-select${index}'>
+            <option value='-1'>Pick A Tee</option>
+        </select>`);
+    $(`#tee-select${index}`).attr('onchange', `displayYardage(${JSON.stringify(myCourse.data.holes)}, ${myCourse.data.holeCount}, ${index})`);
     for (let i = 0; i < currentCourse.length; i++) {
         if (currentCourse[i].teeType !== 'auto change location') {
-            $('#tee-select').append(`<option value='${currentCourse[i].teeType}'>${currentCourse[i].teeType}</option>`);
+            $(`#tee-select${index}`).append(`<option value='${i}'>${currentCourse[i].teeType}</option>`);
         }
     }
 }

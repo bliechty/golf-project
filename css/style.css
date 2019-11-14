@@ -36,6 +36,8 @@ button {
     width: 100%;
     display: flex;
     justify-content: center; }
+    .container .score-card-container * {
+      box-sizing: border-box; }
     .container .score-card-container .tee-selection {
       display: none; }
     .container .score-card-container .score-card {
@@ -45,13 +47,13 @@ button {
       .container .score-card-container .score-card .holes, .container .score-card-container .score-card .yardage, .container .score-card-container .score-card .handicap {
         display: flex;
         text-align: center; }
-      .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .holes .boxes {
+      .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .holes .boxes, .container .score-card-container .score-card .yardage .firstColumn, .container .score-card-container .score-card .yardage .score-boxes, .container .score-card-container .score-card .yardage .boxes {
         height: 30px;
         border: 1px solid #000000;
         line-height: 30px; }
-      .container .score-card-container .score-card .holes .firstColumn {
+      .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .yardage .firstColumn {
         width: 200px; }
-      .container .score-card-container .score-card .holes .col, .container .score-card-container .score-card .holes .boxes {
+      .container .score-card-container .score-card .holes .col, .container .score-card-container .score-card .holes .boxes, .container .score-card-container .score-card .yardage .col, .container .score-card-container .score-card .yardage .boxes {
         width: 45px; }
-      .container .score-card-container .score-card .holes .scores, .container .score-card-container .score-card .holes .score-boxes {
+      .container .score-card-container .score-card .holes .scores, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .yardage .scores, .container .score-card-container .score-card .yardage .score-boxes {
         width: 80px; }
