@@ -78,14 +78,14 @@ function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
 
         for (let j = 1; j <= numberOfHoles / 2; j++) {
             $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onblur='loseFocusScore(this, ${i - 1}, ${i - j}, ${numberOfHoles})'></div>`);
+                onblur='loseFocusScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
         }
 
         $('#out-score').append(`<div id='outscore${i}' class='score-boxes'></div>`);
 
         for (let j = numberOfHoles / 2 + 1; j <= numberOfHoles; j++) {
             $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onblur='loseFocusScore(this, ${i - 1}, ${i - j}, ${numberOfHoles})'></div>`);
+                onblur='loseFocusScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})' onkeydown='enterScore(event, this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
         }
 
         $('#in-score').append(`<div id='inscore${i}' class='score-boxes'></div>`);
@@ -257,6 +257,13 @@ function loseFocusPlayerName(el, index) {
 }
 
 function editScore(el) {
+    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element/6150060#6150060
+    let range = document.createRange();
+    range.selectNodeContents(el);
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
     $(el).attr('contenteditable', 'true');
     $('div[contenteditable="true"]').trigger('focus');
     $(el).css('cursor', 'auto');
