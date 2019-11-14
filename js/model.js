@@ -6,10 +6,6 @@ class PlayerCollection {
     add(name) {
         this.collection.push(new Player(name));
     }
-
-    changeName(name, index) {
-        this.collection[index].name = name;
-    }
 }
 
 class Player {
@@ -28,5 +24,9 @@ class Player {
         } else if (type === 'total') {
             return this.totalScores.reduce((previous, current) => previous + current);
         }
+    }
+
+    updateScores (holeNum, score, numberOfHoles) {
+        
     }
 }
