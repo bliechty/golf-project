@@ -25,7 +25,8 @@ $(function() {
                                 displayScoreCardInfo(${myCourse.data.holeCount}, $("#selectid${i}").val());
                                 displayPar(${JSON.stringify((myCourse.data.holes))}, ${myCourse.data.holeCount});
                                 populateTeeSelect(${JSON.stringify(myCourse)}, ${JSON.stringify(myCourse.data.holes[0].teeBoxes)}, ${i});
-                                displayYardage(${JSON.stringify(myCourse.data.holes)}, ${myCourse.data.holeCount}, ${i})'>Select</button>
+                                displayYardage(${JSON.stringify(myCourse.data.holes)}, ${myCourse.data.holeCount}, ${i});
+                                displayHandicap(${JSON.stringify((myCourse.data.holes))}, ${myCourse.data.holeCount})'>Select</button>
                         </div>
                     </div>`);
             });
@@ -109,10 +110,10 @@ function displayPar(holesArray, numberOfHoles) {
     $('#total-score').append(`<div class='score-boxes'>${totalPar}</div>`);
 }
 
-function displayHandicap() {
+function displayHandicap(holesArray, numberOfHoles) {
     let totalHandicap = 0;
     let outHandicap, inHandicap;
-    $('#first-column').append(`<div class='firstColumn'>Par</div>`);
+    $('#first-column').append(`<div class='firstColumn'>Handicap</div>`);
 
     for (let i = 1; i <= numberOfHoles / 2; i++) {
         totalHandicap += holesArray[i - 1].teeBoxes[0].hcp;
