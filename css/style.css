@@ -2,12 +2,26 @@ html, body {
   height: 100%;
   width: 100%;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  font-family: 'Roboto', sans-serif; }
 
 button {
   padding: 5px 20px;
   border-radius: 5px;
   background-color: #C0C0C0; }
+
+input[type='text']::placeholder {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  color: #000000;
+  font-size: 16px; }
+
+input[type='text'] {
+  line-height: 30px;
+  height: 30px; }
+
+select {
+  font-family: 'Roboto', sans-serif; }
 
 .container {
   width: 100%;
@@ -47,6 +61,8 @@ button {
       .container .score-card-container .score-card .holes, .container .score-card-container .score-card .yardage, .container .score-card-container .score-card .handicap {
         display: flex;
         text-align: center; }
+      .container .score-card-container .score-card .holes #first-column, .container .score-card-container .score-card .yardage #first-column {
+        width: 200px; }
       .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .holes .boxes, .container .score-card-container .score-card .yardage .firstColumn, .container .score-card-container .score-card .yardage .score-boxes, .container .score-card-container .score-card .yardage .boxes {
         height: 30px;
         border: 1px solid #000000;
@@ -57,5 +73,3 @@ button {
         width: 45px; }
       .container .score-card-container .score-card .holes .scores, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .yardage .scores, .container .score-card-container .score-card .yardage .score-boxes {
         width: 80px; }
-      .container .score-card-container .score-card .holes .playerName, .container .score-card-container .score-card .holes .playerScore, .container .score-card-container .score-card .yardage .playerName, .container .score-card-container .score-card .yardage .playerScore {
-        cursor: pointer; }

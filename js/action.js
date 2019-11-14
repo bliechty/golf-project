@@ -73,19 +73,19 @@ function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
     }
 
     for (let i = 1; i <= numberOfPlayers; i++) {
-        $('#first-column').append(`<div class='firstColumn playerName' onclick='editPlayerName(this)'
-            onkeydown='enterPlayerName(event, this, ${i - 1})' onblur='loseFocusPlayerName(this, ${i - 1})'>Player ${i} (Click to edit)</div>`);
+        $('#first-column').append(`<input type='text' class='firstColumn playerName' placeholder='Player ${i} (Click to edit)'
+            onkeyup='enterPlayerName(event, this, ${i - 1})' onblur='loseFocus(this)'>`);
 
         for (let j = 1; j <= numberOfHoles / 2; j++) {
-            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onkeyup='enterScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
+            $(`#col${j}`).append(`<input type='text' id='p${i}h${j}' class='boxes playerScore'
+                onkeyup='enterScore(event, this, ${i}, ${j - 1}, ${numberOfHoles})' onblur='loseFocus(this)'>`);
         }
 
         $('#out-score').append(`<div id='outscore${i}' class='score-boxes'></div>`);
 
         for (let j = numberOfHoles / 2 + 1; j <= numberOfHoles; j++) {
-            $(`#col${j}`).append(`<div id='p${i}h${j}' class='boxes playerScore' onclick='editScore(this)'
-                onkeyup='enterScore(this, ${i - 1}, ${j - 1}, ${numberOfHoles})'></div>`);
+            $(`#col${j}`).append(`<input type='text' id='p${i}h${j}' class='boxes playerScore'
+                onkeyup='enterScore(event, this, ${i}, ${j - 1}, ${numberOfHoles})' onblur='loseFocus(this)'>`);
         }
 
         $('#in-score').append(`<div id='inscore${i}' class='score-boxes'></div>`);
@@ -226,4 +226,31 @@ function getCourse(id) {
         xhttp.open('GET', `https://golf-courses-api.herokuapp.com/courses/${id}`);
         xhttp.send();
     });
+}
+
+function enterPlayerName(e, el, playerIndex) {
+    if (e.which === 13) {
+        players.collection[playerIndex].name = $(el).val();
+        $(el).attr('placeholder', `${$(el).val()}`);
+        $(el).val('');
+    }
+}
+
+function loseFocus(el) {
+    $(el).val('');
+    $('.error').html('');
+}
+
+function enterScore(e, el, playerNum, holeNum, numOfHoles) {
+    $('.error').html('');
+    if (e.which === 13) {
+        if (!isNaN($(el).val())) {
+            players.collection[playerNum - 1].updateScores(playerNum, holeNum, $(el).val(), numOfHoles);
+            $(el).attr('placeholder', $(el).val());
+            $(el).val('');
+        } else {
+            $(el).val('');
+            $('.error').html('That is not a number!');
+        }
+    }
 }
