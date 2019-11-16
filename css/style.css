@@ -16,10 +16,6 @@ input[type='text']::placeholder {
   color: #000000;
   font-size: 16px; }
 
-input[type='text'] {
-  line-height: 30px;
-  height: 30px; }
-
 select {
   font-family: 'Roboto', sans-serif; }
 
@@ -61,6 +57,8 @@ select {
       .container .score-card-container .score-card .holes, .container .score-card-container .score-card .yardage, .container .score-card-container .score-card .handicap {
         display: flex;
         text-align: center; }
+      .container .score-card-container .score-card .holes input[type='text'], .container .score-card-container .score-card .yardage input[type='text'] {
+        padding-top: 5px; }
       .container .score-card-container .score-card .holes #first-column, .container .score-card-container .score-card .yardage #first-column {
         width: 200px; }
       .container .score-card-container .score-card .holes .firstColumn, .container .score-card-container .score-card .holes .score-boxes, .container .score-card-container .score-card .holes .boxes, .container .score-card-container .score-card .yardage .firstColumn, .container .score-card-container .score-card .yardage .score-boxes, .container .score-card-container .score-card .yardage .boxes {

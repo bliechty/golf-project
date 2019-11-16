@@ -244,13 +244,14 @@ function loseFocus(el) {
 function enterScore(e, el, playerNum, holeNum, numOfHoles) {
     $('.error').html('');
     if (e.which === 13) {
-        if (!isNaN($(el).val())) {
-            players.collection[playerNum - 1].updateScores(playerNum, holeNum, $(el).val(), numOfHoles);
+        let numInput = Number($(el).val());
+        if (Number.isInteger(numInput) && numInput !== 0) {
+            players.collection[playerNum - 1].updateScores(playerNum, holeNum, numInput, numOfHoles);
             $(el).attr('placeholder', $(el).val());
             $(el).val('');
         } else {
             $(el).val('');
-            $('.error').html('That is not a number!');
+            $('.error').html('That is not a valid input');
         }
     }
 }

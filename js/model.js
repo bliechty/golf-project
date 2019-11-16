@@ -27,15 +27,15 @@ class Player {
     }
 
     updateScores (playerNum, holeNum, score, numberOfHoles) {
-        if (holeNum <= numberOfHoles / 2) {
-            this.outScores[holeNum] = Number(score);
+        if (holeNum + 1 <= numberOfHoles / 2) {
+            this.outScores[holeNum] = score;
             $(`#outscore${playerNum}`).html(this.getScores('out'));
         } else {
-            this.inScores[holeNum] = Number(score);
+            this.inScores[holeNum] = score;
             $(`#inscore${playerNum}`).html(this.getScores('in'));
         }
 
-        this.totalScores[holeNum] = Number(score);
+        this.totalScores[holeNum] = score;
         $(`#totalscore${playerNum}`).html(this.getScores('total'));
     }
 }
