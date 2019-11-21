@@ -6,6 +6,10 @@ class PlayerCollection {
     add(name) {
         this.collection.push(new Player(name));
     }
+
+    duplicate(name) {
+        return this.collection.some(player => player.name === name);
+    }
 }
 
 class Player {
