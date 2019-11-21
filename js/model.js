@@ -38,4 +38,28 @@ class Player {
         this.totalScores[holeNum] = score;
         $(`#totalscore${playerNum}`).html(this.getScores('total'));
     }
+
+    isFinished(numberOfHoles, playerNum) {
+        let check = true;
+        for (let i = 0; i < numberOfHoles; i++) {
+            if (this.totalScores[0] === undefined) {
+                check = false;
+                break;
+            }
+        }
+        if (this.totalScores.length === numberOfHoles && check) {
+            let par = Number($('#parTotal').html());
+            let totalScore = this.getScores('total');
+            if (par === totalScore) {
+                $('.player-total-score').css('display', 'block');
+                $('.player-total-score').html(`${this.name}'s score is on par`);
+            } else if (totalScore > par) {
+                $('.player-total-score').css('display', 'block');
+                $('.player-total-score').html(`${this.name}'s score is ${totalScore - par} more than par`);
+            } else {
+                $('.player-total-score').css('display', 'block');
+                $('.player-total-score').html(`${this.name}'s score is ${par - totalScore} less than par`);
+            }
+        }
+    }
 }

@@ -115,7 +115,7 @@ function displayPar(holesArray, numberOfHoles) {
     inPar = totalPar - outPar;
 
     $('#in-score').append(`<div class='score-boxes'>${inPar}</div>`);
-    $('#total-score').append(`<div class='score-boxes'>${totalPar}</div>`);
+    $('#total-score').append(`<div class='score-boxes' id='parTotal'>${totalPar}</div>`);
 }
 
 function displayHandicap(holesArray, numberOfHoles) {
@@ -238,10 +238,12 @@ function enterPlayerName(e, el, playerIndex) {
 
 function loseFocus(el) {
     $(el).val('');
+    $('.error').css('display', 'none');
     $('.error').html('');
 }
 
 function enterScore(e, el, playerNum, holeNum, numOfHoles) {
+    $('.error').css('display', 'none');
     $('.error').html('');
     if (e.which === 13) {
         let numInput = Number($(el).val());
@@ -249,8 +251,10 @@ function enterScore(e, el, playerNum, holeNum, numOfHoles) {
             players.collection[playerNum - 1].updateScores(playerNum, holeNum, numInput, numOfHoles);
             $(el).attr('placeholder', $(el).val());
             $(el).val('');
+            players.collection[playerNum - 1].isFinished(numOfHoles, playerNum);
         } else {
             $(el).val('');
+            $('.error').css('display', 'block');
             $('.error').html('That is not a valid input');
         }
     }
