@@ -230,6 +230,8 @@ function getCourse(id) {
 }
 
 function enterPlayerName(e, el, playerIndex) {
+    $('.error').css('display', 'none');
+    $('.error').html('');
     if (e.which === 13) {
         if (!players.duplicate($(el).val())) {
             players.collection[playerIndex].name = $(el).val();
