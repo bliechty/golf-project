@@ -35,6 +35,7 @@ $(function() {
 });
 
 function displayHoles (numberOfHoles) {
+    $('.player-total-score-container').html('');
     $('.score-card').css('display', 'block');
     $('.tee-selection').css('display', 'block');
     $('.holes').html('');

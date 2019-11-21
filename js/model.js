@@ -15,6 +15,7 @@ class PlayerCollection {
 class Player {
     constructor(name) {
         this.name = name;
+        this.display = false;
         this.inScores = [];
         this.outScores = [];
         this.totalScores = [];
@@ -46,7 +47,7 @@ class Player {
     isFinished(numberOfHoles, playerNum) {
         let check = true;
         for (let i = 0; i < numberOfHoles; i++) {
-            if (this.totalScores[0] === undefined) {
+            if (this.totalScores[i] === undefined) {
                 check = false;
                 break;
             }
@@ -54,15 +55,29 @@ class Player {
         if (this.totalScores.length === numberOfHoles && check) {
             let par = Number($('#parTotal').html());
             let totalScore = this.getScores('total');
-            if (par === totalScore) {
-                $('.player-total-score').css('display', 'block');
-                $('.player-total-score').html(`${this.name}'s score is on par`);
-            } else if (totalScore > par) {
-                $('.player-total-score').css('display', 'block');
-                $('.player-total-score').html(`${this.name}'s score is ${totalScore - par} more than par`);
+            if (this.display === false) {
+                if (par === totalScore) {
+                    $('.player-total-score-container').append(`<div id='player${playerNum}total' class='player-total-score'>
+                            ${this.name}'s score is on par
+                        </div>`);
+                } else if (totalScore > par) {
+                    $('.player-total-score-container').append(`<div id='player${playerNum}total' class='player-total-score'>
+                            ${this.name}'s score is ${totalScore - par} more than par
+                        </div>`);
+                } else {
+                    $('.player-total-score-container').append(`<div id='player${playerNum}total' class='player-total-score'>
+                            ${this.name}'s score is ${par - totalScore} less than par
+                        </div>`);
+                }
+                this.display = true;
             } else {
-                $('.player-total-score').css('display', 'block');
-                $('.player-total-score').html(`${this.name}'s score is ${par - totalScore} less than par`);
+                if (par === totalScore) {
+                    $(`#player${playerNum}total`).html(`${this.name}'s score is on par`);
+                } else if (totalScore > par) {
+                    $(`#player${playerNum}total`).html(`${this.name}'s score is ${totalScore - par} more than par`);
+                } else {
+                    $(`#player${playerNum}total`).html(`${this.name}'s score is ${par - totalScore} less than par`);
+                }
             }
         }
     }

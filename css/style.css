@@ -40,9 +40,9 @@ select {
     .container .info .player-total-score-container {
       width: 50%;
       display: flex;
-      justify-content: center; }
+      justify-content: center;
+      flex-wrap: wrap; }
       .container .info .player-total-score-container .player-total-score {
-        display: none;
         width: 300px;
         height: 30px;
         background-color: limegreen;
