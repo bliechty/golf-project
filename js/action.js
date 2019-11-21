@@ -75,7 +75,7 @@ function displayScoreCardInfo (numberOfHoles, numberOfPlayers) {
 
     for (let i = 1; i <= numberOfPlayers; i++) {
         $('#first-column').append(`<input type='text' class='firstColumn playerName' placeholder='Player ${i} (Click to edit)'
-            onkeyup='enterPlayerName(event, this, ${i - 1})' onblur='loseFocus(this)'>`);
+            onkeyup='enterPlayerName(event, this, ${i - 1}, ${numberOfHoles})' onblur='loseFocus(this)'>`);
 
         for (let j = 1; j <= numberOfHoles / 2; j++) {
             $(`#col${j}`).append(`<input type='text' id='p${i}h${j}' class='boxes playerScore'
@@ -229,13 +229,14 @@ function getCourse(id) {
     });
 }
 
-function enterPlayerName(e, el, playerIndex) {
+function enterPlayerName(e, el, playerIndex, numberOfHoles) {
     $('.error').css('display', 'none');
     $('.error').html('');
     if (e.which === 13) {
         if (!players.duplicate($(el).val())) {
             players.collection[playerIndex].name = $(el).val();
             $(el).attr('placeholder', `${$(el).val()}`);
+            players.collection[playerIndex].isFinished(numberOfHoles, playerIndex + 1);
         } else {
             $('.error').css('display', 'block');
             $('.error').html('Duplicate name, try again');
@@ -255,9 +256,9 @@ function enterScore(e, el, playerNum, holeNum, numOfHoles) {
     $('.error').html('');
     if (e.which === 13) {
         let numInput = Number($(el).val());
-        if (Number.isInteger(numInput) && numInput !== 0) {
+        if (Number.isInteger(numInput) && numInput > 0) {
             players.collection[playerNum - 1].updateScores(playerNum, holeNum, numInput, numOfHoles);
-            $(el).attr('placeholder', $(el).val());
+            $(el).attr('placeholder', numInput);
             $(el).val('');
             players.collection[playerNum - 1].isFinished(numOfHoles, playerNum);
         } else {
