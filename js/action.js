@@ -233,13 +233,16 @@ function enterPlayerName(e, el, playerIndex, numberOfHoles) {
     $('.error').css('display', 'none');
     $('.error').html('');
     if (e.which === 13) {
-        if (!players.duplicate($(el).val())) {
+        if ($(el).val() === '') {
+            $('.error').css('display', 'block');
+            $('.error').html('Name cannot be empty');
+        } else if (players.duplicate($(el).val())) {
+            $('.error').css('display', 'block');
+            $('.error').html('Duplicate name, try again');
+        } else {
             players.collection[playerIndex].name = $(el).val();
             $(el).attr('placeholder', `${$(el).val()}`);
             players.collection[playerIndex].isFinished(numberOfHoles, playerIndex + 1);
-        } else {
-            $('.error').css('display', 'block');
-            $('.error').html('Duplicate name, try again');
         }
         $(el).val('');
     }
